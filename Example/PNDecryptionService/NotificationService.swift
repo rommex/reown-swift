@@ -36,7 +36,7 @@ class NotificationService: UNNotificationServiceExtension {
     private func handleWalletKitNotification(content: UNNotificationContent, topic: String, tag: UInt, ciphertext: String) -> UNMutableNotificationContent {
 
         do {
-            let WalletKitDecryptionService = try WalletKitDecryptionService(groupIdentifier: "group.com.walletconnect.sdk")
+            let WalletKitDecryptionService = try WalletKitDecryptionService(groupIdentifier: "group.com.unstoppabledomains.reown.example")
 
             let decryptedPayload = try WalletKitDecryptionService.decryptMessage(topic: topic, ciphertext: ciphertext, tag: tag)
 
@@ -74,7 +74,7 @@ class NotificationService: UNNotificationServiceExtension {
 
     private func handleNotifyNotification(content: UNNotificationContent, topic: String, ciphertext: String) -> UNMutableNotificationContent {
         do {
-            let service = NotifyDecryptionService(groupIdentifier: "group.com.walletconnect.sdk")
+            let service = NotifyDecryptionService(groupIdentifier: "group.com.unstoppabledomains.reown.example")
             let (pushMessage, subscription, account) = try service.decryptMessage(topic: topic, ciphertext: ciphertext)
 
             log("message decrypted", account: account, topic: topic, message: pushMessage)
@@ -190,7 +190,7 @@ private extension NotificationService {
     }
 
     func log(_ event: String, account: Account? = nil, topic: String? = nil, message: NotifyMessage? = nil) {
-        let keychain = GroupKeychainStorage(serviceIdentifier: "group.com.walletconnect.sdk")
+        let keychain = GroupKeychainStorage(serviceIdentifier: "group.com.unstoppabledomains.reown.example")
         
         guard let clientId: String = try? keychain.read(key: "clientId") else {
             return

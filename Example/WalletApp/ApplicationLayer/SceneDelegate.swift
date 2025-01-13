@@ -125,7 +125,7 @@ private extension SceneDelegate {
 
     func configureWalletKitClientIfNeeded() {
         Networking.configure(
-            groupIdentifier: "group.com.walletconnect.sdk",
+            groupIdentifier: "group.com.unstoppabledomains.reown.example",
             projectId: InputConfig.projectId,
             socketFactory: DefaultSocketFactory()
         )
