@@ -11,6 +11,7 @@ var dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0"),
     .package(url: "https://github.com/WalletConnect/QRCode", from: "14.3.1"),
     .package(name: "CoinbaseWalletSDK", url: "https://github.com/MobileWalletProtocol/wallet-mobile-sdk", .upToNextMinor(from: "1.0.0")),
+    .package(url: "https://github.com/Boilertalk/secp256k1.swift.git", .exact("0.1.4")),
 //    .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMinor(from: "1.10.0")),
 ]
 
@@ -27,7 +28,7 @@ func buildYttriumWrapperTarget() -> Target {
             path: "Sources/YttriumWrapper"
         )
     } else {
-        dependencies.append(.package(url: "https://github.com/reown-com/yttrium", .exact("0.4.8")))
+        dependencies.append(.package(url: "https://github.com/reown-com/yttrium", .exact("0.5.1")))
         return .target(
             name: "YttriumWrapper",
             dependencies: [.product(name: "Yttrium", package: "yttrium")],
@@ -35,6 +36,10 @@ func buildYttriumWrapperTarget() -> Target {
         )
     }
 }
+
+package.dependencyOverrides = [
+    "secp256k1.swift": .package(url: "https://github.com/Boilertalk/secp256k1.swift.git", .exact("0.1.4"))
+]
 
 let package = Package(
     name: "reown",
@@ -197,7 +202,7 @@ let package = Package(
             dependencies: ["WalletConnectPairing", "TestingUtils"]),
         .testTarget(
             name: "NotifyTests",
-            dependencies: ["WalletConnectNotify", "TestingUtils"]),
+            dependencies: ["WalletConnectNotify", "TestingUtils", "YttriumWrapper"]),
         .testTarget(
             name: "RelayerTests",
             dependencies: ["WalletConnectRelay", "WalletConnectUtils", "TestingUtils"]),
